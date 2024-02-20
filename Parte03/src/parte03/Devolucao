@@ -1,0 +1,94 @@
+package parte03;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Devolucao {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private LocalDate dataDevolucao;
+
+    private double multa;
+
+    private boolean atraso;
+
+    @OneToOne
+    @JoinColumn(name = "emprestimo_id")
+    private Emprestimo emprestimo;
+
+    @OneToMany(mappedBy = "devolucao", cascade = CascadeType.ALL)
+    private List<ItemDevolucao> itensDevolucao = new ArrayList<>();
+
+    public Devolucao() {
+        // Construtor vazio necessário para JPA
+    }
+
+    public Devolucao(LocalDate dataDevolucao, double multa, boolean atraso, Emprestimo emprestimo) {
+        this.dataDevolucao = dataDevolucao;
+        this.multa = multa;
+        this.atraso = atraso;
+        this.emprestimo = emprestimo;
+    }
+
+    // Métodos Getters e Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
+
+    public double getMulta() {
+        return multa;
+    }
+
+    public void setMulta(double multa) {
+        this.multa = multa;
+    }
+
+    public boolean isAtraso() {
+        return atraso;
+    }
+
+    public void setAtraso(boolean atraso) {
+        this.atraso = atraso;
+    }
+
+    public Emprestimo getEmprestimo() {
+        return emprestimo;
+    }
+
+    public void setEmprestimo(Emprestimo emprestimo) {
+        this.emprestimo = emprestimo;
+    }
+
+    public List<ItemDevolucao> getItensDevolucao() {
+        return itensDevolucao;
+    }
+
+    public void setItensDevolucao(List<ItemDevolucao> itensDevolucao) {
+        this.itensDevolucao = itensDevolucao;
+    }
+}
